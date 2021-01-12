@@ -2,6 +2,18 @@
     "name": "akkurateio/laravel-search",
     "description": "Search package for Laravel applications",
     "type": "library",
+    "license": "AGPL-3.0-only",
+    "authors": [
+        {
+            "name": "Akkurate",
+            "email": "hello@subvitamine.com",
+            "homepage": "https://www.akkurate.io",
+            "role": "Company"
+        }
+    ],
+    "support": {
+        "docs": "https://github.com/akkurateio/documentation"
+    },
     "require": {
         "spatie/laravel-searchable": "^1.9",
         "subvitaminetm/akkurate-for-search-sdk-php": "^1.0"
