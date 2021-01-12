@@ -1,5 +1,5 @@
 {
-    "name": "akkurate/laravel-search",
+    "name": "akkurateio/laravel-search",
     "description": "Search package for Laravel applications",
     "type": "library",
     "require": {
