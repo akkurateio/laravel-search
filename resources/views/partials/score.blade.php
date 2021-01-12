@@ -1,0 +1,1 @@
+<span>{{ number_format($entry->score * 10, 2, ',', ' ') }}&nbsp;%</span>

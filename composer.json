@@ -1,0 +1,24 @@
+{
+    "name": "akkurate/laravel-search",
+    "description": "Search package for Laravel applications",
+    "type": "library",
+    "require": {
+        "spatie/laravel-searchable": "^1.9",
+        "subvitaminetm/akkurate-for-search-sdk-php": "^1.0"
+    },
+    "autoload" : {
+        "psr-4": {
+            "Akkurate\\LaravelSearch\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Akkurate\\LaravelSearch\\LaravelSearchServiceProvider"
+            ],
+            "aliases": {
+                "Search": "Akkurate\\LaravelSearch\\Facades\\Search"
+            }
+        }
+    }
+}

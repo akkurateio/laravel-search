@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Observers;
+
+use {{namespace}}{{Model}};
+use Akkurate\LaravelSearch\Jobs\CreateElasticEntry;
+use Akkurate\LaravelSearch\Jobs\UpdateElasticEntry;
+use Akkurate\LaravelSearch\Jobs\DeleteElasticEntry;
+
+class {{Model}}SearchObserver
+{
+    /**
+     * Handle the {{Model}} "created" event.
+     *
+     * @param  {{Model}}  ${{modelCamel}}
+     * @return void
+     */
+    public function created({{Model}}  ${{modelCamel}})
+    {
+        if (app()->runningInConsole() || config('app.env') === 'testing')
+        {
+            return;
+        }
+        if (!${{modelCamel}}->searchable)
+        {
+            CreateElasticEntry::dispatch(${{modelCamel}}, '{{doctype}}', "the/url/to/your/model/here");
+        }
+    }
+
+    /**
+     * Handle the {{Model}} "updated" event.
+     *
+     * @param  {{Model}}  ${{modelCamel}}
+     * @return void
+     */
+    public function updated({{Model}}  ${{modelCamel}})
+    {
+        if (app()->runningInConsole() || config('app.env') === 'testing')
+        {
+            return;
+        }
+        if (${{modelCamel}}->searchable) {
+            UpdateElasticEntry::dispatch(${{modelCamel}}, '{{doctype}}', "the/url/to/your/model/here");
+        } else {
+            CreateElasticEntry::dispatch(${{modelCamel}}, '{{doctype}}', "the/url/to/your/model/here");
+        }
+
+    }
+
+    /**
+     * Handle the {{Model}} "deleted" event.
+     *
+     * @param  {{Model}}  ${{modelCamel}}
+     * @return void
+     */
+    public function deleted({{Model}}  ${{modelCamel}})
+    {
+        if (app()->runningInConsole() || config('app.env') === 'testing')
+        {
+            return;
+        }
+        DeleteElasticEntry::dispatch(${{modelCamel}});
+        ${{modelCamel}}->searchable()->where('uuid', ${{modelCamel}}->searchable->uuid)->delete();
+    }
+
+    /**
+     * Handle the {{Model}} "forceDeleted" event.
+     *
+     * @param  {{Model}}  ${{modelCamel}}
+     * @return void
+     */
+    public function forceDeleted({{Model}}  ${{modelCamel}})
+    {
+        //
+    }
+
+}
