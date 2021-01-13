@@ -1,10 +1,10 @@
 # Laravel Search
 
-Ce package propose un moteur de recherche pour Akkurate Laravel Boilerplate. 
+This package provides a search engine for Akkurate Laravel Boilerplate. 
 
-Par défaut, la recherche s’effectue sur des champs spécifiques de model Eloquent via le package de Spatie [laravel-searchable](https://github.com/spatie/laravel-searchable).
+By default, the search is performed on specific fields of the Eloquent model via the Spatie [laravel-searchable](https://github.com/spatie/laravel-searchable) package.
 
-Si c’est insuffisant pour les besoins du projet, ce package permet de mettre en place une indexation dans Elasticsearch.
+If this is insufficient for the needs of the project, this package allows to set up an indexing in Elasticsearch.
 
 ## Installation
 
@@ -12,22 +12,22 @@ Si c’est insuffisant pour les besoins du projet, ce package permet de mettre e
 composer require akkurate/laravel-search
 ```
 
-Publier le fichier de configuration :
+Publish the configuration file:
 ```bash
 php artisan vendor:publish --provider="Akkurate\LaravelSearch\LaravelSearchServiceProvider" --tag="config"
 ```
 
-Publier les vues :
+Publish views:
 ```bash
 php artisan vendor:publish --provider="Akkurate\LaravelSearch\LaravelSearchServiceProvider" --tag="views"
 ```
 
-Publier le partial du composant Vue pour Elasticsearch :
+Publish the partial of the View component for Elasticsearch:
 ```bash
 php artisan vendor:publish --provider="Akkurate\LaravelSearch\LaravelSearchServiceProvider" --tag="akk4search"
 ```
 
-Publier les vues des entrées pour la page de résultats :
+Publish entry views for the results page:
 ```bash
 php artisan vendor:publish --provider="Akkurate\LaravelSearch\LaravelSearchServiceProvider" --tag="entries"
 ```
@@ -36,7 +36,7 @@ php artisan vendor:publish --provider="Akkurate\LaravelSearch\LaravelSearchServi
 
 ### Configuration
 
-Dans le fichier de configuration laravel-search, déclarer les models à rechercher et les champs sur lesquels effectuer la recherche :
+In the laravel-search configuration file, declare the models to search and the fields to search on:
 
 ```php
 'eloquent' => [
@@ -77,21 +77,18 @@ Dans le fichier de configuration laravel-search, déclarer les models à recherc
 
 ### Configuration
 
-Par défaut, la version Elastic, n’est pas active.
-
-Dans le fichier app.js :
+By default, the Elastic version is not active.
+In the app.js:
 
 ```js
 import Akk4Search from 'akk4search_vuejs';
 Vue.use(Akk4Search);
 ```
-puis
+then
 ```shell script
 npm run dev
 ```
-
-Dans le .env :
-
+In the .env:
 ```
 // Akkurare For Search
 AKKURATE_SEARCH_ENABLED=true
@@ -99,7 +96,7 @@ AKKURATE_SEARCH_ENABLED=true
 // Credentials
 AKKURATE_SEARCH_KEY=your_api_key
 
-// Activation de l’indexation (pour les modèles de l'écosystème Akkurate) sur le modèle AKKURATE_SEARCH_PACKAGE_MODEL=bool
+// Activation of indexing (for Akkurate ecosystem models) on the model AKKURATE_SEARCH_PACKAGE_MODEL=bool
 AKKURATE_SEARCH_ADMIN_USER=true
 AKKURATE_SEARCH_ADMIN_ACCOUNT=true
 AKKURATE_SEARCH_BLOG_ARTICLE=true
@@ -121,27 +118,27 @@ AKKURATE_SEARCH_HELPDESK_TICKET=true
 AKKURATE_SEARCH_HELPDESK_MEDIA_RESOURCE=true
 ```
 
-### Ajouter un observer dans le fichier de config
+### Add an observer in the config file
 
-Créer l’observer
+Create the observer
 ```
 php artisan search:make:observer Example
 ```
-Par défaut, le model est supposé se trouver dans App\Models.
+By default, the model is supposed to be in App\Models.
 
-Il est possible de modifier le chemin en fournissant une option --namespace. Par exemple, si le model Example se trouve dans Package\Models :
+It is possible to change the path by providing a --namespace option. For example, if the model Example is in  Package\Models:
 ```
 php artisan search:make:observer Example --namespace=Package\\Models
 ```
 
-Renseigner dans l’observer le schéma de l’url pour atteindre la ressource (pour générer le lien qui apparaîtra lorsque la ressource remontera dans les résultats de recherche).
+Fill in the url schema to reach the resource (to generate the link that will appear when the resource goes up in the search results).
 
-Par exemple : 
+For example: 
 ```
 "brain/{uuid}/admin/users/$user->id"
 ```
 
-Ajouter la déclaration dans le fichier de config
+Add the declaration in the config file
 ```
 'indexable' => [
     'my-custom-observer' => [
@@ -160,34 +157,34 @@ Ajouter la déclaration dans le fichier de config
 ]
 ```
 
-index : le model doit-il être indexé ou non.  
+**index**: should the model be indexed or not.  
 
-**where** : lors de la commande `search:sync`, si on ne souhaite envoyer de base tous les résultats dans la base Elastic, il est possible de renseigner une clause where, pas exemple `['status' => 'active']`.  
+**where**: in the `search:sync` command, if you don't want to send all the results to the Elastic database, it is possible to fill in a where clause, for example`['status' => 'active']`.  
 
-**route** : le schéma d’accès à la ressource, pour générer l’url lors de l’utilisation du CLI.  
+**route**: the resource access schema, to generate the url when using the CLI.  
 
-**key** : le champ défini pour accéder à la ressource. Par défaut 'id' si absent, mais peut être renseigné sur 'uuid' ou 'slug', etc. selon les besoins.  
+**key**: the field defined to access the resource. By default 'id' if absent, but can be set to 'uuid' or 'slug', etc. as needed.  
 
-**name** : le champ du model utilisé pour remplir le champ name dans Elastic.  
+**name**: the model field used to fill the name field in Elastic.
 
-**suggest** : sur FALSE l’entrée remonte directement dans les résultats ; sur TRUE l'entrée ne remonte pas dans les résultats mais sert à faire remonter des résultats liés.  
+**suggest**: on FALSE the entry goes directly up in the results; on TRUE the entry does not go up in the results but is used to bring up related results.  
 
-**env** : l’environnement dans lequel les résultats doivent remonter.  
+**env**: the environment in which the results are to be reported. 
 
-**link** : la vue sur laquelle pointeront les liens pour ce model ('edit' ou 'show').  
+**link**: the view to which the links for this model will point ('edit' or 'show').  
 
 ### Entities
 
-Une fonction dans le model permet de définir et mettre à jour les entities (relations à indexer) pour un model donné.
+A function in the model allows to define and update the entities (relations to be indexed) for a given model.
 
 ```
 public function getEntities()
 {
-    return []; // logique à définir pour chaque model 
+    return []; // logic to be defined for each model 
 }
 ```
 
-Exemple : définir une entity ACCOUNT sur chaque USER. Sur le model App\Models\User :
+Example: define an ACCOUNT entity on each USER. On the model App\Models\User :
 ```
 public function getEntities()
 {
@@ -200,43 +197,43 @@ public function getEntities()
 
 ### CLI
 
-#### Vérifier la connexion avec akk4search
+#### Check the connection with akk4search
 ```
 php artisan search:check
 ```
 
-#### Afficher la liste des modèles observés
+#### Display the list of observed models
 ```
 php artisan search:list
 ```
-#### Synchroniser les données avec la base ElasticSearch
+#### Synchronize data with the ElasticSearch database
 ```
 php artisan search:sync
 ```
-#### Tester une recherche par mot-clé
+#### Test a keyword search
 ```
 php artisan search:query subvitamine
 ```
-#### Générer un nouvel observer
+#### Generate a new observer
 ```
 php artisan search:make:observer
 ```
-#### Supprimer des données dans la base Elastic
+#### Delete data in the Elastic database
 ```
 php artisan search:clear
 ```
-Supprime toutes les données elastic des models observés (définis à TRUE dans le .env) + leurs searchables SQL
+Removes all elastic data of the observed models (set to TRUE in the .env) + their SQL searchables
 
 ```
 php artisan search:clear --all
 ```
-Supprime toutes les données elastic liées au compte (relatives à la clé renseignée dans le .env) + leurs searchables SQL
+Removes all the elastic data related to the account (relative to the key filled in the .env) + their SQL searchables.
 
 ```
 php artisan search:clear --entities=ADMIN_ACCOUNT --entities=ADMIN_USER
 ```
-Supprime toutes les données elastic liées au(x) doctype(s). Les searchables sont à supprimer manuellement. 
+Removes all elastic data related to the doctype(s). Searchables must be deleted manually. 
 ```
 php artisan search:clear --sync 
 ```
-Supprime toutes les données elastic des models observés et effectue une synchro
+Removes all elastic data from the observed models and performs a synchronization.
