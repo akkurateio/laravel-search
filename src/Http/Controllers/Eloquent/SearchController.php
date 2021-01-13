@@ -2,8 +2,8 @@
 
 namespace Akkurate\LaravelSearch\Http\Controllers\Eloquent;
 
-use Akkurate\LaravelCore\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Spatie\Searchable\ModelSearchAspect;
 use Spatie\Searchable\Search;
 

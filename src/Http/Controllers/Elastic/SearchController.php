@@ -2,9 +2,9 @@
 
 namespace Akkurate\LaravelSearch\Http\Controllers\Elastic;
 
-use Akkurate\LaravelCore\Http\Controllers\Controller;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class SearchController extends Controller
 {
