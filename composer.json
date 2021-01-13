@@ -17,6 +17,7 @@
         "docs": "https://github.com/akkurateio/documentation"
     },
     "require": {
+        "akkurateio/laravel-back-components": "0.x-dev",
         "spatie/laravel-searchable": "^1.9",
         "subvitaminetm/akkurate-for-search-sdk-php": "^1.0"
     },
