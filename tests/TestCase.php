@@ -2,22 +2,20 @@
 
 namespace Akkurate\LaravelMedia\Tests;
 
-use Akkurate\LaravelSearch\Tests\Fixtures\Language;
-use Akkurate\LaravelSearch\Tests\Fixtures\User;
-use Akkurate\LaravelSearch\Tests\Fixtures\Account;
 use Akkurate\LaravelBackComponents\LaravelBackComponentsServiceProvider;
 use Akkurate\LaravelSearch\LaravelSearchServiceProvider;
+use Akkurate\LaravelSearch\Tests\Fixtures\Account;
+use Akkurate\LaravelSearch\Tests\Fixtures\Language;
+use Akkurate\LaravelSearch\Tests\Fixtures\User;
+use Cviebrock\EloquentSluggable\ServiceProvider as EloquentSluggableServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Kris\LaravelFormBuilder\FormBuilderServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
-use Cviebrock\EloquentSluggable\ServiceProvider as EloquentSluggableServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
-
     protected $user;
 
     protected function setUp(): void
@@ -29,7 +27,6 @@ class TestCase extends OrchestraTestCase
 
         $this->user = User::first();
         auth()->login($this->user);
-
     }
 
     protected function getPackageProviders($app)
@@ -45,7 +42,6 @@ class TestCase extends OrchestraTestCase
 
     protected function setUpDatabase()
     {
-
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->default('');
@@ -92,7 +88,6 @@ class TestCase extends OrchestraTestCase
 
     protected function createUser()
     {
-
         Language::create([
             'label' => 'français',
             'locale' => 'fr',

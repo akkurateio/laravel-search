@@ -12,9 +12,10 @@ class SearchClear extends Command
 
     public function handle()
     {
-        if (!\Search::getToken()) {
+        if (! \Search::getToken()) {
             $this->info("No connection to akk4search :'(");
             $this->warn("Check your key and your IP address");
+
             return;
         }
         if ($this->option('all')) {

@@ -4,8 +4,8 @@ namespace Akkurate\LaravelSearch\Observers\Admin;
 
 use Akkurate\LaravelCore\Models\Account;
 use Akkurate\LaravelSearch\Jobs\CreateElasticEntry;
-use Akkurate\LaravelSearch\Jobs\UpdateElasticEntry;
 use Akkurate\LaravelSearch\Jobs\DeleteElasticEntry;
+use Akkurate\LaravelSearch\Jobs\UpdateElasticEntry;
 
 class AccountObserver
 {
@@ -17,11 +17,10 @@ class AccountObserver
      */
     public function created(Account  $account)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!$account->searchable) {
+        if (! $account->searchable) {
             CreateElasticEntry::dispatch($account, 'ADMIN_ACCOUNT');
         }
     }
@@ -34,8 +33,7 @@ class AccountObserver
      */
     public function updated(Account  $account)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         if ($account->searchable) {
@@ -53,8 +51,7 @@ class AccountObserver
      */
     public function deleted(Account  $account)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         $uuidSearchable = $account->searchable->uuid;
@@ -73,5 +70,4 @@ class AccountObserver
     {
         //
     }
-
 }

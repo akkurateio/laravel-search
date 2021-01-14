@@ -17,7 +17,7 @@ class SearchList extends Command
                 $models[] = $model;
             }
         }
-        if (!$models) {
+        if (! $models) {
             $this->info('No model observed at the moment.');
         } else {
             $plural = count($models) > 1 ? 's' : '';

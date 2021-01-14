@@ -17,11 +17,10 @@ class TermObserver
      */
     public function created(Term  $term)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!$term->searchable) {
+        if (! $term->searchable) {
             CreateElasticEntry::dispatch($term, 'GLOSSARY_TERM', "brain/{uuid}/glossary/terms/$term->slug");
         }
     }
@@ -34,8 +33,7 @@ class TermObserver
      */
     public function updated(Term  $term)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         if ($term->searchable) {
@@ -53,11 +51,10 @@ class TermObserver
      */
     public function deleted(Term  $term)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!empty($term->seachable)) {
+        if (! empty($term->seachable)) {
             $uuidSearchable = $term->searchable->uuid;
 
             DeleteElasticEntry::dispatch($uuidSearchable);

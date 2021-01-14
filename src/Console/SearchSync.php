@@ -2,9 +2,9 @@
 
 namespace Akkurate\LaravelSearch\Console;
 
-use Illuminate\Console\Command;
 use Akkurate\LaravelSearch\Jobs\CreateElasticEntry;
 use Akkurate\LaravelSearch\Jobs\UpdateElasticEntry;
+use Illuminate\Console\Command;
 
 class SearchSync extends Command
 {
@@ -13,14 +13,15 @@ class SearchSync extends Command
 
     public function handle()
     {
-        if (!\Search::getToken()) {
+        if (! \Search::getToken()) {
             $this->info("No connection to akk4search :'(");
             $this->warn("Check your key and your IP address");
+
             return;
         }
         foreach (config('laravel-search.elastic.indexable') as $doctype => $model) {
             if ($model['index']) {
-                if (!empty($model['where'])) {
+                if (! empty($model['where'])) {
                     $items = $model['model']::where($model['where'])->get();
                 } else {
                     $items = $model['model']::all();
@@ -29,7 +30,7 @@ class SearchSync extends Command
                 $this->warn('Synchronizing doctype ' . $doctype);
                 $bar->start();
                 foreach ($items as $item) {
-                    if (!empty($model['route'])) {
+                    if (! empty($model['route'])) {
                         $key = isset($model['key']) ? $model['key'] : 'id';
                         $route = $model['route']."/{$item->$key}";
                     } else {

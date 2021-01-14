@@ -3,10 +3,10 @@
 namespace Akkurate\LaravelSearch\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class UpdateElasticEntry implements ShouldQueue
 {
@@ -42,7 +42,7 @@ class UpdateElasticEntry implements ShouldQueue
             return true;
         }
 
-        if (!empty($this->route)) {
+        if (! empty($this->route)) {
             $link = config("laravel-search.elastic.indexable.$this->doctype.link") == 'edit' ? '/edit' : '';
             $route = url('/') . "/{$this->route}" . $link;
         } else {

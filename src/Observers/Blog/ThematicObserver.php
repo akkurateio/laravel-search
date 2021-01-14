@@ -17,14 +17,12 @@ class ThematicObserver
      */
     public function created(Thematic  $thematic)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!$thematic->searchable) {
+        if (! $thematic->searchable) {
             CreateElasticEntry::dispatch($thematic, 'BLOG_THEMATIC', "brain/{uuid}/blog/thematics/$thematic->slug");
         }
-
     }
 
     /**
@@ -35,8 +33,7 @@ class ThematicObserver
      */
     public function updated(Thematic  $thematic)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         if ($thematic->searchable) {
@@ -54,11 +51,10 @@ class ThematicObserver
      */
     public function deleted(Thematic  $thematic)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!empty($thematic->seachable)) {
+        if (! empty($thematic->seachable)) {
             $uuidSearchable = $thematic->searchable->uuid;
 
             DeleteElasticEntry::dispatch($uuidSearchable);

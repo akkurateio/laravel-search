@@ -2,8 +2,6 @@
 
 namespace Akkurate\LaravelSearch\Observers\Crm;
 
-use Akkurate\LaravelCrm\Models\Lea;
-
 class LeadObserver
 {
     /**

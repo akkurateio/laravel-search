@@ -3,11 +3,10 @@
 namespace Akkurate\LaravelSearch\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class CreateElasticEntry implements ShouldQueue
 {
@@ -40,7 +39,7 @@ class CreateElasticEntry implements ShouldQueue
     public function handle()
     {
         if (empty($this->model->searchable) && config('app.env') !== 'testing') {
-            if (!empty($this->route)) {
+            if (! empty($this->route)) {
                 $link = config("laravel-search.elastic.indexable.$this->doctype.link") == 'edit' ? '/edit' : '';
                 $route = url('/') . "/{$this->route}" . $link;
             } else {

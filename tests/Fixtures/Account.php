@@ -7,7 +7,6 @@ use Webpatser\Uuid\Uuid;
 
 class Account extends Model
 {
-
     protected $table = 'accounts';
 
     protected $fillable = ['name', 'slug', 'email', 'preference_id'];

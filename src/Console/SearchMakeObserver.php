@@ -14,7 +14,7 @@ class SearchMakeObserver extends Command
     public function handle()
     {
         $model = $this->argument('model');
-        if (!is_dir($folder = app_path("/Observers"))) {
+        if (! is_dir($folder = app_path("/Observers"))) {
             File::makeDirectory($folder);
         }
         file_put_contents(app_path("Observers/{$model}Observer.php"), str_replace(

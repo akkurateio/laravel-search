@@ -17,11 +17,10 @@ class CategoryObserver
      */
     public function created(Category  $category)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!$category->searchable) {
+        if (! $category->searchable) {
             CreateElasticEntry::dispatch($category, 'BOOKMARK_CATEGORY', "brain/{uuid}/bookmark/categories/$category->id");
         }
     }
@@ -34,8 +33,7 @@ class CategoryObserver
      */
     public function updated(Category  $category)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         if ($category->searchable) {
@@ -53,11 +51,10 @@ class CategoryObserver
      */
     public function deleted(Category  $category)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!empty($category->seachable)) {
+        if (! empty($category->seachable)) {
             $uuidSearchable = $category->searchable->uuid;
 
             DeleteElasticEntry::dispatch($uuidSearchable);

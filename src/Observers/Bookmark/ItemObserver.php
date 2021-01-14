@@ -17,11 +17,10 @@ class ItemObserver
      */
     public function created(Item  $item)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!$item->searchable) {
+        if (! $item->searchable) {
             CreateElasticEntry::dispatch($item, 'BOOKMARK_ITEM', "brain/{uuid}/bookmark/items/$item->id");
         }
     }
@@ -34,8 +33,7 @@ class ItemObserver
      */
     public function updated(Item  $item)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         if ($item->searchable) {
@@ -53,11 +51,10 @@ class ItemObserver
      */
     public function deleted(Item  $item)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!empty($item->seachable)) {
+        if (! empty($item->seachable)) {
             $uuidSearchable = $item->searchable->uuid;
 
             DeleteElasticEntry::dispatch($uuidSearchable);

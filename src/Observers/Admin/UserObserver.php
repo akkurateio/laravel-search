@@ -4,8 +4,8 @@ namespace Akkurate\LaravelSearch\Observers\Admin;
 
 use Akkurate\LaravelCore\Models\User;
 use Akkurate\LaravelSearch\Jobs\CreateElasticEntry;
-use Akkurate\LaravelSearch\Jobs\UpdateElasticEntry;
 use Akkurate\LaravelSearch\Jobs\DeleteElasticEntry;
+use Akkurate\LaravelSearch\Jobs\UpdateElasticEntry;
 
 class UserObserver
 {
@@ -17,11 +17,10 @@ class UserObserver
      */
     public function created(User $user)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!$user->searchable) {
+        if (! $user->searchable) {
             CreateElasticEntry::dispatch($user, 'ADMIN_USER', "brain/{uuid}/admin/users/$user->id", $user->getSearchContent());
         }
     }
@@ -34,8 +33,7 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         if ($user->searchable) {
@@ -53,11 +51,10 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!empty($user->seachable)) {
+        if (! empty($user->seachable)) {
             $uuidSearchable = $user->searchable->uuid;
 
             DeleteElasticEntry::dispatch($uuidSearchable);
@@ -75,5 +72,4 @@ class UserObserver
     {
         //
     }
-
 }

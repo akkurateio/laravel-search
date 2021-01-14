@@ -46,9 +46,10 @@ class SearchController extends Controller
             "from" => intval($request->from),
             "limit" => config('laravel-search.pagination')
         ]);
-        if (!empty($data->statusCode) && $data->statusCode === 400) {
+        if (! empty($data->statusCode) && $data->statusCode === 400) {
             return back()->withError('Aucune entrée ne correspond dans notre base');
         }
+
         return view('search::pages.results', [
             'keyword' => $searchword,
             'suggestions' => $data->suggestions,
@@ -60,5 +61,4 @@ class SearchController extends Controller
             'before' => $data->meta->page - config('laravel-search.pagination') * 2,
         ]);
     }
-
 }

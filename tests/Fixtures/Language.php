@@ -7,7 +7,6 @@ use Webpatser\Uuid\Uuid;
 
 class Language extends Model
 {
-
     protected $table = 'languages';
 
     protected $fillable = ['label', 'locale', 'locale_php', 'priority', 'is_active', 'is_default'];
@@ -22,5 +21,4 @@ class Language extends Model
             $model->uuid = (string) Uuid::generate(4);
         });
     }
-
 }

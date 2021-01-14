@@ -23,12 +23,12 @@ class SearchController extends Controller
     {
         $search = new Search();
 
-        foreach (config('laravel-search.eloquent.searchable') as $searchable)   {
-            $search->registerModel($searchable['model'], function(ModelSearchAspect $modelSearchAspect) use ($searchable) {
+        foreach (config('laravel-search.eloquent.searchable') as $searchable) {
+            $search->registerModel($searchable['model'], function (ModelSearchAspect $modelSearchAspect) use ($searchable) {
                 foreach ($searchable['attributes'] as $attribute) {
                     $modelSearchAspect->addSearchableAttribute($attribute);
                 }
-                if  ($searchable['model'] == "Akkurate\LaravelCore\Models\Account") {
+                if ($searchable['model'] == "Akkurate\LaravelCore\Models\Account") {
                     $modelSearchAspect->administrable();
                 } else {
                     $modelSearchAspect->eloquentSearchable();

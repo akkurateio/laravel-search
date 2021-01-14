@@ -2,14 +2,14 @@
 
 namespace Akkurate\LaravelSearch\Traits;
 
-use Illuminate\Support\Str;
 use Akkurate\LaravelSearch\Models\Searchable;
+use Illuminate\Support\Str;
 
 /**
  * Trait ElasticSearchable
  */
-trait ElasticSearchable {
-
+trait ElasticSearchable
+{
     public function searchable()
     {
         return $this->morphOne(Searchable::class, 'searchable');
@@ -37,6 +37,5 @@ trait ElasticSearchable {
 
     public function getFiltersContent()
     {
-
     }
 }

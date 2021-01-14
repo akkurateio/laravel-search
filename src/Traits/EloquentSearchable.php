@@ -5,7 +5,8 @@ namespace Akkurate\LaravelSearch\Traits;
 /**
  * Trait EloquentSearchable
  */
-trait EloquentSearchable {
+trait EloquentSearchable
+{
 
 
     /**
@@ -16,11 +17,10 @@ trait EloquentSearchable {
      */
     public function scopeEloquentSearchable($query)
     {
-        if (!auth()->user()->hasRole('superadmin')) {
+        if (! auth()->user()->hasRole('superadmin')) {
             return $query
                 ->where('account_id', auth()->user()->account_id)
                 ->orWhereIn('account_id', auth()->user()->accounts->pluck('id'));
         }
     }
-
 }

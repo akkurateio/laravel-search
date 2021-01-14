@@ -5,10 +5,10 @@ namespace Akkurate\LaravelSearch;
 use Akkurate\LaravelSearch\Console\SearchCheck;
 use Akkurate\LaravelSearch\Console\SearchClear;
 use Akkurate\LaravelSearch\Console\SearchList;
+use Akkurate\LaravelSearch\Console\SearchMakeObserver;
 use Akkurate\LaravelSearch\Console\SearchQuery;
 use Akkurate\LaravelSearch\Console\SearchSync;
 use Illuminate\Support\ServiceProvider;
-use Akkurate\LaravelSearch\Console\SearchMakeObserver;
 
 /**
  * Access service provider
@@ -16,16 +16,15 @@ use Akkurate\LaravelSearch\Console\SearchMakeObserver;
  */
 class LaravelSearchServiceProvider extends ServiceProvider
 {
-	/**
-	 * Bootstrap services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-
-	    if (config('laravel-search.elastic.enabled')) {
-	        $this->loadRoutesFrom(__DIR__.'/../routes/elastic.php');
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if (config('laravel-search.elastic.enabled')) {
+            $this->loadRoutesFrom(__DIR__.'/../routes/elastic.php');
             foreach (config('laravel-search.elastic.indexable') as $model) {
                 if ($model['index']) {
                     $model['model']::observe($model['observer']);
@@ -42,14 +41,14 @@ class LaravelSearchServiceProvider extends ServiceProvider
                 ]);
             }
         } else {
-	        $this->loadRoutesFrom(__DIR__.'/../routes/eloquent.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/eloquent.php');
         }
 
-		$this->loadMigrationsFrom(__DIR__.'/Database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
 
-		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'search');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'search');
 
-		$this->publishes([
+        $this->publishes([
             __DIR__.'/../config/laravel-search.php' => config_path('laravel-search.php')
         ], 'config');
 
@@ -64,18 +63,18 @@ class LaravelSearchServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views/entries' => resource_path('views/vendor/search/entries'),
         ], 'entries');
+    }
 
-	}
-
-	/**
-	 * Register services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/laravel-search.php', 'laravel-search'
+            __DIR__.'/../config/laravel-search.php',
+            'laravel-search'
         );
 
         if (config('laravel-search.elastic.enabled')) {
@@ -83,5 +82,5 @@ class LaravelSearchServiceProvider extends ServiceProvider
                 return new \Akkurate4Search\Content(config('laravel-search.elastic.credentials.key'));
             });
         }
-	}
+    }
 }

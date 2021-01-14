@@ -17,11 +17,10 @@ class ArticleObserver
      */
     public function created(Article  $article)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!$article->searchable) {
+        if (! $article->searchable) {
             CreateElasticEntry::dispatch($article, 'BLOG_ARTICLE', "brain/{uuid}/blog/articles/$article->slug");
         }
     }
@@ -34,8 +33,7 @@ class ArticleObserver
      */
     public function updated(Article  $article)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
         if ($article->searchable) {
@@ -53,11 +51,10 @@ class ArticleObserver
      */
     public function deleted(Article  $article)
     {
-        if (app()->runningInConsole() || config('app.env') === 'testing')
-        {
+        if (app()->runningInConsole() || config('app.env') === 'testing') {
             return;
         }
-        if (!empty($article->seachable)) {
+        if (! empty($article->seachable)) {
             $uuidSearchable = $article->searchable->uuid;
 
             DeleteElasticEntry::dispatch($uuidSearchable);
