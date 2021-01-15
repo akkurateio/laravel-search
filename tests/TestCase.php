@@ -7,12 +7,9 @@ use Akkurate\LaravelSearch\LaravelSearchServiceProvider;
 use Akkurate\LaravelSearch\Tests\Fixtures\Account;
 use Akkurate\LaravelSearch\Tests\Fixtures\Language;
 use Akkurate\LaravelSearch\Tests\Fixtures\User;
-use Cviebrock\EloquentSluggable\ServiceProvider as EloquentSluggableServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Kris\LaravelFormBuilder\FormBuilderServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Spatie\Permission\PermissionServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {

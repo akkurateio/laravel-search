@@ -2,7 +2,6 @@
 
 namespace Akkurate\LaravelSearch\Tests;
 
-
 class ExampleTest extends TestCase
 {
     /** @test */
