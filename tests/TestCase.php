@@ -1,6 +1,6 @@
 <?php
 
-namespace Akkurate\LaravelMedia\Tests;
+namespace Akkurate\LaravelSearch\Tests;
 
 use Akkurate\LaravelBackComponents\LaravelBackComponentsServiceProvider;
 use Akkurate\LaravelSearch\LaravelSearchServiceProvider;
@@ -32,11 +32,8 @@ class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            PermissionServiceProvider::class,
             LaravelBackComponentsServiceProvider::class,
             LaravelSearchServiceProvider::class,
-            FormBuilderServiceProvider::class,
-            EloquentSluggableServiceProvider::class,
         ];
     }
 

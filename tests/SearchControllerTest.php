@@ -2,23 +2,30 @@
 
 namespace Akkurate\LaravelSearch\Tests;
 
-// use PHPUnit\Framework\TestCase; apparemment pas la bonne class pour les post https://stackoverflow.com/questions/62987090/how-to-fix-undefined-method-errors-in-laravel-7-x-phpunit
-use Illuminate\Foundation\Testing\TestCase;
+use Akkurate\LaravelSearch\Tests\Fixtures\Account;
+use Akkurate\LaravelSearch\Tests\Fixtures\User;
+use Illuminate\Support\Facades\Route;
 
 class SearchControllerTest extends TestCase
 {
     /** @test */
     public function it_should_a_find_an_user()
     {
-        $response = $this->post(route('search'), [
+
+        $user = auth()->user();
+
+        config()->set('laravel-search.eloquent.searchable', [
+            [
+                'model' => User::class,
+                'attributes' => ['name', 'email']
+            ]
+        ]);
+
+        $response = $this->post(route('search', ['uuid' => $user->account->slug]), [
             'query' => 'user',
             'token' => csrf_token()
         ]);
-        dd($response);
-    }
 
-    public function createApplication()
-    {
-        // TODO: Implement createApplication() method.
+        dd($response);
     }
 }
