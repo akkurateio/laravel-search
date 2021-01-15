@@ -24,6 +24,7 @@ class LaravelSearchServiceProvider extends ServiceProvider
     public function boot()
     {
         if (config('laravel-search.elastic.enabled')) {
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
             $this->loadRoutesFrom(__DIR__.'/../routes/elastic.php');
             foreach (config('laravel-search.elastic.indexable') as $model) {
                 if ($model['index']) {
@@ -43,8 +44,6 @@ class LaravelSearchServiceProvider extends ServiceProvider
         } else {
             $this->loadRoutesFrom(__DIR__.'/../routes/eloquent.php');
         }
-
-        $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'search');
 
