@@ -4,10 +4,10 @@ namespace Akkurate\LaravelSearch\Tests\Fixtures;
 
 use Akkurate\LaravelSearch\Traits\EloquentSearchable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
-
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Searchable\Searchable;
+
+use Spatie\Searchable\SearchResult;
 
 class User extends Authenticatable implements Searchable
 {
@@ -34,15 +34,15 @@ class User extends Authenticatable implements Searchable
 
     public function getSearchResult(): SearchResult
     {
-    $url = route('search', [
+        $url = route('search', [
         'uuid' => 'user',
         'token' => csrf_token()
     ]);
 
-    return new \Spatie\Searchable\SearchResult(
-        $this,
-        $this->query,
-        $url
-    );
+        return new \Spatie\Searchable\SearchResult(
+            $this,
+            $this->query,
+            $url
+        );
     }
 }
