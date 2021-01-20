@@ -8,11 +8,11 @@ return [
     'eloquent' => [
         'searchable' => [
             [
-                'model' => \Akkurate\LaravelCore\Models\Account::class,
+                'model' => accountClass(),
                 'attributes' => ['name']
             ],
             [
-                'model' => \Akkurate\LaravelCore\Models\User::class,
+                'model' => userClass(),
                 'attributes' => ['firstname', 'lastname', 'email']
             ],
 //            [

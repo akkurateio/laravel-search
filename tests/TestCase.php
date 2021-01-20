@@ -2,6 +2,7 @@
 
 namespace Akkurate\LaravelSearch\Tests;
 
+use Akkurate\LaravelAccountSubmodule\LaravelAccountSubmoduleServiceProvider;
 use Akkurate\LaravelBackComponents\LaravelBackComponentsServiceProvider;
 use Akkurate\LaravelSearch\LaravelSearchServiceProvider;
 use Akkurate\LaravelSearch\Tests\Fixtures\Account;
@@ -10,6 +11,7 @@ use Akkurate\LaravelSearch\Tests\Fixtures\User;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\Permission\PermissionServiceProvider;
 
 class TestCase extends OrchestraTestCase
 {
@@ -31,6 +33,8 @@ class TestCase extends OrchestraTestCase
         return [
             LaravelBackComponentsServiceProvider::class,
             LaravelSearchServiceProvider::class,
+            PermissionServiceProvider::class,
+            LaravelAccountSubmoduleServiceProvider::class,
         ];
     }
 
@@ -76,6 +80,16 @@ class TestCase extends OrchestraTestCase
             $table->foreignId('account_id')->nullable()->constrained('accounts')->onDelete('cascade');
             $table->timestamps();
         });
+        
+        Schema::create('admin_account_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
+        });
+
+        include_once __DIR__. '/../vendor/spatie/laravel-permission/database/migrations/create_permission_tables.php.stub';
+
+        (new \CreatePermissionTables())->up();
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
